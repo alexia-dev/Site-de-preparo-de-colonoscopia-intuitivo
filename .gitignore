@@ -1,0 +1,11 @@
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log
+
+# Secrets / local config
+.env
+.env.*
+!.env.example
