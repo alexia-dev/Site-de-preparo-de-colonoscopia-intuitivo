@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Editor visual | Endoimagem</title>
+<meta name="description" content="Editor visual de demonstração para personalizar a apresentação institucional da Endoimagem.">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Manrope:wght@400;600;700;800&family=DM+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#071d49;--accent:#f58220;--paper:#fffaf5;--ink:#14284c;--font:'Manrope',sans-serif}
+*{box-sizing:border-box}body{margin:0;background:#eef1f6;color:#17243b;font:15px/1.5 var(--font)}button,input,select{font:inherit}button{cursor:pointer}
+.top{background:var(--navy);color:white;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:12px}.top strong{font-size:20px}.top a{color:white;text-decoration:none}
+.app{display:grid;grid-template-columns:310px 1fr;min-height:calc(100vh - 58px)}aside{background:white;padding:24px;border-right:1px solid #dfe4ec;position:sticky;top:0;height:calc(100vh - 58px);overflow:auto}aside h1{font-size:23px;color:var(--navy);margin:0 0 6px}aside p{color:#64748b;font-size:13px;margin:0 0 22px}.field{margin:18px 0}.field label{display:block;font-weight:800;font-size:13px;margin-bottom:8px;color:#334155}.field select,.field input[type=text]{width:100%;border:1px solid #d5dce6;border-radius:10px;padding:10px;background:white}.colors{display:flex;gap:10px;flex-wrap:wrap}.swatch{width:35px;height:35px;border:3px solid white;box-shadow:0 0 0 1px #cbd5e1;border-radius:50%;padding:0}.swatch.active{box-shadow:0 0 0 3px var(--navy)}.actions{display:grid;gap:9px;margin-top:22px}.btn{border:0;border-radius:11px;padding:12px 14px;font-weight:800}.primary{background:var(--navy);color:white}.secondary{background:#fff0e3;color:var(--navy);border:1px solid #f4d2b3}.note{font-size:12px;color:#64748b;background:#f8fafc;padding:12px;border-radius:10px;margin-top:16px}
+main{padding:25px;min-width:0}.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}.toolbar span{color:#64748b;font-size:13px}.toolbar button{border:1px solid #cbd5e1;background:white;border-radius:9px;padding:8px 12px}
+.preview{background:white;border-radius:20px;overflow:hidden;box-shadow:0 10px 35px #0f172a12;min-height:calc(100vh - 130px);position:relative}
+.preview-header{height:70px;padding:12px clamp(18px,4vw,48px);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #edf0f4;background:white}.logo{display:flex;gap:10px;align-items:center;color:var(--navy);font-weight:900}.logo-mark{width:42px;height:42px;border-radius:12px;background:var(--accent);color:white;display:grid;place-items:center;font-size:24px}.preview-nav{display:flex;gap:20px;font-size:12px;font-weight:800;color:var(--navy)}.preview-nav a{color:inherit;text-decoration:none}
+.slide{min-height:calc(100vh - 210px);padding:clamp(25px,5vw,70px);display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:30px;background:linear-gradient(115deg,#fff 0%,var(--paper) 100%);position:relative}.kicker{font-size:11px;letter-spacing:.16em;font-weight:900;color:var(--accent)}h2{font-size:clamp(34px,5vw,66px);line-height:1.04;letter-spacing:-.04em;color:var(--navy);margin:12px 0}.slide p{font-size:clamp(16px,1.8vw,20px);color:#59677e;max-width:540px}.slide em{font-style:normal;color:var(--accent)}.cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}.cta button{border:0;padding:12px 17px;border-radius:10px;font-weight:900}.cta .dark{background:var(--navy);color:white}.cta .light{background:white;border:1px solid #dce1e9;color:var(--navy)}
+.visual{background:var(--navy);color:white;border-radius:25px;min-height:310px;padding:30px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}.visual:after{content:'';position:absolute;width:260px;height:260px;border:1px dashed #ffffff55;border-radius:50%;right:-80px;top:-90px}.visual .badge{font-size:12px;color:var(--accent);letter-spacing:.16em;font-weight:900}.visual strong{font-size:clamp(25px,3vw,38px);line-height:1.2;margin:14px 0}.visual small{color:#dbe5f4}.slide-dots{display:flex;gap:8px;justify-content:center;padding:15px;background:#fff}.dot{border:0;background:#d3dbe7;width:9px;height:9px;border-radius:99px;padding:0}.dot.active{background:var(--accent);width:25px}.slide-counter{position:absolute;bottom:22px;left:28px;font-size:12px;color:#8a96a8}
+.preview.presentation .slide{min-height:calc(100vh - 210px)}
+.preview.classic .slide{min-height:500px}
+.preview.minimal .slide{background:white}
+.preview.minimal .visual{background:#f6f7f9;color:var(--navy);border:1px solid #e3e7ed}
+.preview.minimal .visual small{color:#64748b}
+.preview.rounded .visual{border-radius:45px}
+@media(max-width:850px){.app{grid-template-columns:1fr}aside{position:relative;height:auto;border-right:0;border-bottom:1px solid #dfe4ec}.slide{grid-template-columns:1fr;min-height:auto}.preview-nav{display:none}.visual{min-height:230px}.slide-counter{position:static}.preview{min-height:auto}main{padding:12px}}
+</style>
+</head>
+<body>
+<header class="top"><strong>ENDOIMAGEM <span style="color:#f58220">/ Editor visual</span></strong><a href="https://endoimagem.alexiamendesassis.workers.dev/">← Voltar ao site</a></header>
+<div class="app">
+<aside>
+<h1>Personalizar aparência</h1><p>Escolha o estilo e veja uma prévia da apresentação institucional.</p>
+<div class="field"><label for="style">Estilo visual</label><select id="style"><option value="modern">Moderno</option><option value="minimal">Minimalista</option><option value="classic">Institucional clássico</option><option value="rounded">Moderno arredondado</option></select></div>
+<div class="field"><label for="layout">Formato</label><select id="layout"><option value="presentation">Apresentação em slides</option><option value="classic">Página institucional tradicional</option></select></div>
+<div class="field"><label>Cor de destaque</label><div class="colors"><button class="swatch active" data-color="#f58220" style="background:#f58220" aria-label="Laranja Endoimagem"></button><button class="swatch" data-color="#0b2b5b" style="background:#0b2b5b" aria-label="Azul"></button><button class="swatch" data-color="#159b91" style="background:#159b91" aria-label="Verde petróleo"></button><button class="swatch" data-color="#8b5cf6" style="background:#8b5cf6" aria-label="Roxo"></button></div></div>
+<div class="field"><label for="font">Tipografia</label><select id="font"><option value="Manrope">Moderna — Manrope</option><option value="Nunito">Nunito — amigável</option><option value="DM Sans">DM Sans — limpa</option></select></div>
+<div class="field"><label for="headline">Título principal</label><input id="headline" type="text" value="Seu cuidado começa com confiança."></div>
+<div class="field"><label for="subhead">Texto de apresentação</label><input id="subhead" type="text" value="Diagnóstico e terapêutica endoscópica. Informação clara e acolhimento em cada etapa do seu exame."></div>
+<div class="actions"><button class="btn primary" id="save">Salvar preferências neste navegador</button><button class="btn secondary" id="download">Exportar configuração</button><button class="btn secondary" id="reset">Restaurar padrão Endoimagem</button></div>
+<div class="note">Esta ferramenta é uma prévia local. As alterações ficam neste navegador ou podem ser exportadas. Ela ainda não publica mudanças para todos os visitantes do site.</div>
+</aside>
+<main>
+<div class="toolbar"><span>Prévia ao vivo · Endoimagem Recife</span><div><button id="prev">←</button> <button id="next">→</button></div></div>
+<section class="preview presentation" id="preview">
+<div class="preview-header"><div class="logo"><div class="logo-mark">E</div><div>ENDOIMAGEM<small style="display:block;font-size:10px;font-weight:600">Diagnóstico e Terapêutica Endoscópica</small></div></div><nav class="preview-nav"><a href="#">INÍCIO</a><a href="#">EXAMES</a><a href="#">UNIDADES</a><a href="#">PREPARO</a><a href="#">CONTATO</a></nav></div>
+<div class="slide" id="slide">
+<div><span class="kicker" id="kicker">ENDOIMAGEM · RECIFE</span><h2 id="title">Seu cuidado começa com <em>confiança.</em></h2><p id="description">Diagnóstico e terapêutica endoscópica. Informação clara e acolhimento em cada etapa do seu exame.</p><div class="cta"><button class="dark">Conheça nossos exames</button><button class="light">Acessar preparo</button></div></div>
+<div class="visual"><span class="badge">ENDOIMAGEM</span><strong id="visualtitle">Diagnóstico e<br>terapêutica endoscópica</strong><small>Endoscopia digestiva alta · Colonoscopia</small><small style="margin-top:20px">Recife · Pernambuco</small></div>
+<div class="slide-counter" id="counter">SLIDE 01 / 05</div></div>
+<div class="slide-dots" id="dots"><button class="dot active" data-slide="0" aria-label="Slide 1"></button><button class="dot" data-slide="1" aria-label="Slide 2"></button><button class="dot" data-slide="2" aria-label="Slide 3"></button><button class="dot" data-slide="3" aria-label="Slide 4"></button><button class="dot" data-slide="4" aria-label="Slide 5"></button></div>
+</section>
+</main>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const slides=[
+{tag:'ENDOIMAGEM · RECIFE',title:'Seu cuidado começa com <em>confiança.</em>',desc:'Diagnóstico e terapêutica endoscópica. Informação clara e acolhimento em cada etapa do seu exame.',visual:'Diagnóstico e<br>terapêutica endoscópica'},
+{tag:'NOSSOS EXAMES',title:'Tecnologia e cuidado em <em>endoscopia.</em>',desc:'Conheça a endoscopia digestiva alta e a colonoscopia e saiba como cada exame pode ajudar na avaliação da sua saúde.',visual:'Endoscopia digestiva alta<br>e colonoscopia'},
+{tag:'ENDOSCOPIA DIGESTIVA ALTA',title:'Informação para cuidar do <em>seu bem-estar.</em>',desc:'Entenda o exame e consulte as orientações fornecidas pela equipe responsável pelo seu atendimento.',visual:'Orientações claras<br>para cada etapa'},
+{tag:'COLONOSCOPIA',title:'Prepare-se com <em>tranquilidade.</em>',desc:'Acesse o preparo correspondente ao seu exame e horário. Siga sempre as instruções oficiais da clínica.',visual:'Preparo correto<br>é essencial'},
+{tag:'NOSSAS UNIDADES',title:'Estamos em <em>Recife.</em>',desc:'Confira os endereços das unidades Endoimagem e confirme o local do seu atendimento antes de sair.',visual:'Paissandu / Derby<br>e Boa Vista'}
+];
+let current=0;
+function renderSlide(){const s=slides[current];$('kicker').textContent=s.tag;$('title').innerHTML=s.title;$('description').textContent=s.desc;$('visualtitle').innerHTML=s.visual;$('counter').textContent='SLIDE '+String(current+1).padStart(2,'0')+' / 05';document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===current));}
+function update(){const style=$('style').value,layout=$('layout').value,font=$('font').value;color=getComputedStyle(document.documentElement).getPropertyValue('--accent');$('preview').className='preview '+layout+' '+(style==='modern'?'':style);document.documentElement.style.setProperty('--font',"'"+font+"',sans-serif");$('title').innerHTML=$('headline').value.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');$('description').textContent=$('subhead').value;renderSlide();}
+document.querySelectorAll('.swatch').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.swatch').forEach(x=>x.classList.remove('active'));b.classList.add('active');document.documentElement.style.setProperty('--accent',b.dataset.color);update()}));
+['style','layout','font','headline','subhead'].forEach(id=>$(id).addEventListener('input',update));
+$('prev').onclick=()=>{current=(current+slides.length-1)%slides.length;renderSlide()};
+$('next').onclick=()=>{current=(current+1)%slides.length;renderSlide()};
+document.querySelectorAll('.dot').forEach(d=>d.onclick=()=>{current=Number(d.dataset.slide);renderSlide()});
+function settings(){return {style:$('style').value,layout:$('layout').value,color:getComputedStyle(document.documentElement).getPropertyValue('--accent').trim(),font:$('font').value,headline:$('headline').value,subhead:$('subhead').value}}
+$('save').onclick=()=>{try{localStorage.setItem('endoimagemVisualSettings',JSON.stringify(settings()));alert('Preferências salvas neste navegador!')}catch(e){alert('Não foi possível salvar neste navegador. Use Exportar configuração.')}};
+$('download').onclick=()=>{const blob=new Blob([JSON.stringify(settings(),null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='endoimagem-config-visual.json';a.click();URL.revokeObjectURL(a.href)};
+$('reset').onclick=()=>{ $('style').value='modern';$('layout').value='presentation';$('font').value='Manrope';$('headline').value='Seu cuidado começa com confiança.';$('subhead').value='Diagnóstico e terapêutica endoscópica. Informação clara e acolhimento em cada etapa do seu exame.';document.documentElement.style.setProperty('--accent','#f58220');document.querySelectorAll('.swatch').forEach((b,i)=>b.classList.toggle('active',i===0));current=0;update()};
+try{const saved=JSON.parse(localStorage.getItem('endoimagemVisualSettings')||'null');if(saved){$('style').value=saved.style||'modern';$('layout').value=saved.layout||'presentation';$('font').value=saved.font||'Manrope';$('headline').value=saved.headline||$('headline').value;$('subhead').value=saved.subhead||$('subhead').value;document.documentElement.style.setProperty('--accent',saved.color||'#f58220');document.querySelectorAll('.swatch').forEach(b=>b.classList.toggle('active',b.dataset.color===(saved.color||'#f58220')))}}catch(e){}
+update();
+</script>
+</body></html>
