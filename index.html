@@ -44,7 +44,7 @@ function font(d){document.body.style.fontSize=Math.max(15,Math.min(28,parseFloat
 document.querySelectorAll('.checks input').forEach((c,i)=>{let k='endo-check-'+i;c.checked=localStorage.getItem(k)==='1';c.addEventListener('change',()=>localStorage.setItem(k,c.checked?'1':'0'));});
 function clearChecks(){document.querySelectorAll('.checks input').forEach((c,i)=>{c.checked=false;localStorage.removeItem('endo-check-'+i);});}
 document.getElementById('colonTime').addEventListener('change',function(){if(!this.value)return;const t=this.value; if(t>='08:00'&&t<='13:30'){openprep('morning');}else if(t>='14:00'&&t<='16:40'){openprep('afternoon');}else{alert('Esse horário está fora dos períodos informados pela clínica. Confira o horário na sua marcação.');}});
-document.getElementById('printTime').addEventListener('change',function(){const exam=document.getElementById('printExam').value;const label=document.getElementById('printDetected');if(exam!=='colon'){label.textContent='Endoscopia: confira as orientações da clínica.';return;}if(!this.value){label.textContent='Informe o horário agendado.';return;}const t=this.value;if(t>='08:00'&&t<='13:30'){label.textContent='Folheto original selecionado: COLONOSCOPIA PELA MANHÃ.';}else if(t>='14:00'&&t<='16:40'){label.textContent='Folheto original selecionado: COLONOSCOPIA À TARDE.';}else{label.textContent='Horário fora dos períodos informados pela clínica. Confira sua marcação.';}});
+const printTimeField=document.getElementById('printTime');if(printTimeField)printTimeField.addEventListener('change',function(){const exam=document.getElementById('printExam').value;const label=document.getElementById('printDetected');if(exam!=='colon'){label.textContent='Endoscopia: confira as orientações da clínica.';return;}if(!this.value){label.textContent='Informe o horário agendado.';return;}const t=this.value;if(t>='08:00'&&t<='13:30'){label.textContent='Folheto original selecionado: COLONOSCOPIA PELA MANHÃ.';}else if(t>='14:00'&&t<='16:40'){label.textContent='Folheto original selecionado: COLONOSCOPIA À TARDE.';}else{label.textContent='Horário fora dos períodos informados pela clínica. Confira sua marcação.';}});
 
 function openPrintDialog(){document.getElementById('printDialog').classList.add('show');document.getElementById('printDialog').setAttribute('aria-hidden','false');}
 function closePrintDialog(){document.getElementById('printDialog').classList.remove('show');document.getElementById('printDialog').setAttribute('aria-hidden','true');}
@@ -58,8 +58,8 @@ function printSelectedPrep(){
  if(!time){alert('Informe o horário exato agendado.');return;}
  let title='',content='';
  if(exam==='colon'){
-   if(time>='08:00'&&time<='13:30'){title='Colonoscopia — preparo pela manhã';content='<img src="assets/colonoscopia-manha.jpg" alt="Folheto original de preparo de colonoscopia pela manhã">';}
-   else if(time>='14:00'&&time<='16:40'){title='Colonoscopia — preparo à tarde';content='<img src="assets/colonoscopia-tarde.jpg" alt="Folheto original de preparo de colonoscopia à tarde">';}
+   if(time>='08:00'&&time<='13:30'){title='Colonoscopia — preparo pela manhã';content='<img src="colonoscopia-manha.jpg" alt="Folheto original de preparo de colonoscopia pela manhã">';}
+   else if(time>='14:00'&&time<='16:40'){title='Colonoscopia — preparo à tarde';content='<img src="colonoscopia-tarde.jpg" alt="Folheto original de preparo de colonoscopia à tarde">';}
    else{alert('Esse horário não está dentro dos horários de colonoscopia informados pela clínica (08h–13h30 ou 14h–16h40). Confira sua marcação.');return;}
  }else{
    title='Endoscopia — preparo do exame';
