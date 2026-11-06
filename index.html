@@ -106,4 +106,26 @@ function printSelectedPrep(){
  setTimeout(()=>{window.print();document.body.classList.remove('print-mode');},350);
 }
 window.addEventListener('afterprint',()=>document.body.classList.remove('print-mode'));
-</script><div class="print-dialog" id="printDialog" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="printTitle"><div class="print-card"><button class="close-print" onclick="closePrintDialog()" aria-label="Fechar">×</button><div style="font-size:38px">🖨️</div><h2 id="printTitle">Imprimir preparo</h2><p>Escolha o exame, a data, o horário e a unidade indicada no agendamento. A impressão mostrará somente a unidade selecionada.</p><label class="print-label" for="printExam">Exame</label><select id="printExam" onchange="updatePrintOptions()"><option value="colon">Colonoscopia</option><option value="endo">Endoscopia</option></select><label class="print-label" for="printUnit">Unidade onde será realizado</label><select id="printUnit" required style="width:100%;padding:14px;border:2px solid #e4d9ce;border-radius:13px;font:inherit;color:var(--n)"><option value="">Selecione a unidade</option><option value="derby">Derby / Paissandu</option><option value="boa-vista">Boa Vista</option></select><label class="print-label" for="printDate">Data do exame</label><input id="printDate" type="date" style="width:100%;padding:14px;border:2px solid #e4d9ce;border-radius:13px;font:inherit;color:var(--n)"><div id="printTimeWrap"><label class="print-label" for="printTime">Horário exato agendado</label><input id="printTime" type="time" style="width:100%;padding:14px;border:2px solid #e4d9ce;border-radius:13px;font:inherit;color:var(--n)"></div><p id="printDetected" class="print-hint">Informe o horário. O site identifica automaticamente o folheto da manhã ou da tarde.</p><button class="btn print-action" onclick="printSelectedPrep()">📄 Gerar preparo para imprimir / salvar PDF</button><p class="print-hint">Na impressão do navegador, selecione “Salvar como PDF”.</p></div></div><div class="printSheet" id="printSheet"></div></body></html>
+</script><div class="print-dialog" id="printDialog" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="printTitle"><div class="print-card"><button class="close-print" onclick="closePrintDialog()" aria-label="Fechar">×</button><div style="font-size:38px">🖨️</div><h2 id="printTitle">Imprimir preparo</h2><p>Escolha o exame, a data, o horário e a unidade indicada no agendamento. A impressão mostrará somente a unidade selecionada.</p><label class="print-label" for="printExam">Exame</label><select id="printExam" onchange="updatePrintOptions()"><option value="colon">Colonoscopia</option><option value="endo">Endoscopia</option></select><label class="print-label" for="printUnit">Unidade onde será realizado</label><select id="printUnit" required style="width:100%;padding:14px;border:2px solid #e4d9ce;border-radius:13px;font:inherit;color:var(--n)"><option value="">Selecione a unidade</option><option value="derby">Derby / Paissandu</option><option value="boa-vista">Boa Vista</option></select><label class="print-label" for="printDate">Data do exame</label><input id="printDate" type="date" style="width:100%;padding:14px;border:2px solid #e4d9ce;border-radius:13px;font:inherit;color:var(--n)"><div id="printTimeWrap"><label class="print-label" for="printTime">Horário exato agendado</label><input id="printTime" type="time" style="width:100%;padding:14px;border:2px solid #e4d9ce;border-radius:13px;font:inherit;color:var(--n)"></div><p id="printDetected" class="print-hint">Informe o horário. O site identifica automaticamente o folheto da manhã ou da tarde.</p><button class="btn print-action" onclick="printSelectedPrep()">📄 Gerar preparo para imprimir / salvar PDF</button><p class="print-hint">Na impressão do navegador, selecione “Salvar como PDF”.</p></div></div><div class="printSheet" id="printSheet"></div>
+<script>
+/* Correção de interação: eventos explícitos para navegadores móveis */
+(function(){
+  function showPrep(period){
+    var morning=document.getElementById('morning');
+    var afternoon=document.getElementById('afternoon');
+    if(!morning || !afternoon) return;
+    morning.classList.toggle('open', period==='morning');
+    afternoon.classList.toggle('open', period==='afternoon');
+    document.querySelectorAll('.period').forEach(function(btn){btn.classList.remove('selected');});
+    var selected=document.querySelector('.period.'+(period==='morning'?'am':'pm'));
+    if(selected) selected.classList.add('selected');
+    var section=document.getElementById(period);
+    if(section) setTimeout(function(){section.scrollIntoView({behavior:'smooth',block:'start'});},80);
+  }
+  window.openprep=showPrep;
+  document.querySelectorAll('button.period.am').forEach(function(btn){btn.addEventListener('click',function(e){e.preventDefault();showPrep('morning');});});
+  document.querySelectorAll('button.period.pm').forEach(function(btn){btn.addEventListener('click',function(e){e.preventDefault();showPrep('afternoon');});});
+})();
+</script>
+
+</body></html>
